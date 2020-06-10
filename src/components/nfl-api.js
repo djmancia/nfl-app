@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { api, authParams } from "../assets/nfl-authParams";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { api, authParams } from '../assets/nfl-authParams';
 
 class NFL extends Component {
   state = {
-    token: "",
+    token: '',
     getReq: this.props.get,
     postReq: this.props.post,
     queryParams: this.props.queryParams,
-    response: "",
+    response: ''
   };
 
   componentDidMount() {
@@ -17,32 +17,32 @@ class NFL extends Component {
 
     this.getAuth().then(() => {
       if (getReq !== undefined) {
-        this.handleGetReq(get, queryParams).then((res) =>
+        this.handleGetReq(get, queryParams).then(res =>
           this.setState({ response: res })
         );
       } else if (postReq !== undefined) {
-        this.handlePostReq(post, queryParams).then((res) =>
+        this.handlePostReq(post, queryParams).then(res =>
           this.setState({ response: res })
         );
       } else {
-        console.log("Unknown Request");
+        console.log('Unknown Request');
       }
     });
   }
 
   render() {
-    return "test";
+    return 'test';
   }
 
   getAuth() {
     const data = Object.entries(authParams)
-      .map((e) => e.join("="))
-      .join("&");
+      .map(e => e.join('='))
+      .join('&');
 
     return axios
       .post(`${api.endpoint}/oauth/token`, data)
-      .then((response) => this.setState({ token: response.data.access_token }))
-      .catch((err) => {
+      .then(response => this.setState({ token: response.data.access_token }))
+      .catch(err => {
         console.log(err);
         return null;
       });
@@ -54,11 +54,11 @@ class NFL extends Component {
         ? `${api.endpoint}/${req}?s=${queryParams}`
         : `${api.endpoint}/${req}`;
     const config = {
-      headers: { Authorization: `Bearer ${this.state.token}` },
+      headers: { Authorization: `Bearer ${this.state.token}` }
     };
     return axios
-      .get(endpoint, { key: "value" }, config)
-      .then((response) => response.data.data);
+      .get(endpoint, { key: 'value' }, config)
+      .then(response => response.data.data);
   }
 
   handlePostReq(req) {
