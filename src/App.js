@@ -70,27 +70,41 @@ function App() {
         optionLabel="name"
         style={{ width: '12em' }}
       />
-      <DataTable value={schedule.events}>
-        <Column field="name" header="Matchup" />
+      <DataTable value={schedule.events} style={{width: '75%' }}>
+        <Column field="name" header="Matchup" id="id" style={{width: '50%' }}/>
+         
         <Column
           field={(e) => {
             const { city, state } = e.competitions[0].venue.address;
             return state ? `${city}, ${state}` : city;
           }}
           header="Location"
+          style={{width: '20%' }}
         />
         <Column
           field={(e) => {
             const date = new Date(e.date);
-            return date.toUTCString();
+            return date.toLocaleString();
           }}
           header="Time"
+          style={{width: '15%' }}
         />
         <Column
           field={(e) => {
             return e.competitions[0].broadcasts[0].names[0];
           }}
           header="Nat TV"
+           style={{width: '5%' }}
+        />
+        <Column
+          field={(e) => {
+            return [<img src= {e.competitions[0].competitors[1].team.logo} style={{width: '32px', height: '32px'}}/>,
+                    <img src= {e.competitions[0].competitors[0].team.logo} style={{width: '32px', height: '32px'}}/>];    
+          }}
+
+          
+          header="logo"
+          style={{width: '7%' }}
         />
       </DataTable>
     </div>
